@@ -35,7 +35,6 @@ public class ToolConfig {
      */
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
-
         // 非对称加密方式
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         KeyStoreKeyFactory keyStoreKeyFactory =

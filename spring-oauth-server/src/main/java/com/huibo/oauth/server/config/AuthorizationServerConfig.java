@@ -23,9 +23,13 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
+
+import java.util.Arrays;
 
 /**
  * @author ShuangPC
@@ -41,25 +45,40 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private JwtAccessTokenConverter jwtAccessTokenConverter;
 
     @Autowired
-    private BCryptPasswordEncoder  bCryptPasswordEncoder;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Qualifier("userDetailServiceImpl")
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Bean
+    public TokenEnhancer tokenEnhancer() {
+        return new CustomTokenEnhancer();
+    }
+
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+
+        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(tokenEnhancer(), jwtAccessTokenConverter));
+
         endpoints.tokenStore(new JwtTokenStore(jwtAccessTokenConverter))
+                .tokenEnhancer(tokenEnhancerChain)
                 .accessTokenConverter(jwtAccessTokenConverter)
                 .authenticationManager(authenticationManager)
                 .userDetailsService(userDetailsService);
     }
 
 
+    /**
+     * 使用JdbcClientDetailsService客户端详情服务
+     * clients.withClientDetails(new JdbcClientDetailsService(dataSource));
+     *
+     * @param clients
+     * @throws Exception
+     */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        // 使用JdbcClientDetailsService客户端详情服务
-//        clients.withClientDetails(new JdbcClientDetailsService(dataSource));
 
         // 基于内存存储令牌
         clients.inMemory()
