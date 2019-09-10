@@ -74,8 +74,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      * 使用JdbcClientDetailsService客户端详情服务
      * clients.withClientDetails(new JdbcClientDetailsService(dataSource));
      *
-     * @param clients
-     * @throws Exception
+     * @param clients 客户端对象
+     * @throws Exception 异常
      */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {

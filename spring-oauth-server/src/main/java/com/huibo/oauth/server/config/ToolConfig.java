@@ -31,7 +31,7 @@ public class ToolConfig {
      * converter.setSigningKey("123");
      * return converter;
      *
-     * @return
+     * @return Jwt许可证转换
      */
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
