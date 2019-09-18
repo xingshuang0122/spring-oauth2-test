@@ -12,12 +12,16 @@
 package com.huibo.security.demo.config;
 
 
+import com.huibo.security.demo.model.SecurityProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 /**
  * @author xingshuang
@@ -25,14 +29,35 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private SecurityProperties securityProperties;
+
+    @Autowired
+    private AuthenticationSuccessHandler authenticationSuccessHandler;
+
+    @Autowired
+    private AuthenticationFailureHandler authenticationFailureHandler;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 //        http.httpBasic()
         http.formLogin()
+                // 修改登录页面
+                .loginPage("/authentication/require")
+                // 修改登录请求的处理路径
+                .loginProcessingUrl("/authentication/form")
+                .successHandler(this.authenticationSuccessHandler)
+                .failureHandler(this.authenticationFailureHandler)
                 .and()
                 .authorizeRequests()
-                .anyRequest()
-                .authenticated();
+                // 过滤登录页面
+                .antMatchers("/authentication/require",this.securityProperties.getBrowser().getLoginPage()).permitAll()
+                // 其他都需要授权
+                .anyRequest().authenticated()
+                .and()
+                // 跨站防护请求
+                .csrf().disable();
     }
 
     @Bean
