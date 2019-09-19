@@ -19,6 +19,8 @@
     <modules>
         <module>spring-oauth-server</module>
         <module>spring-websocket-test</module>
+        <module>spring-resource-server-demo</module>
+        <module>spring-security-demo</module>
     </modules>
 
 </project>
