@@ -21,6 +21,7 @@
         <module>spring-websocket-test</module>
         <module>spring-resource-server-demo</module>
         <module>spring-security-demo</module>
+        <module>spring-influxdb-demo</module>
     </modules>
 
 </project>
