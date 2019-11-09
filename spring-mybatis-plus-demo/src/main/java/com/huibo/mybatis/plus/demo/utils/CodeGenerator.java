@@ -9,7 +9,7 @@
   作者姓名           修改时间           版本号              描述
  */
 
-package com.huibo.mybatis.plus.demo.generator;
+package com.huibo.mybatis.plus.demo.utils;
 
 
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
@@ -56,17 +56,19 @@ public class CodeGenerator {
 
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        String projectPath = System.getProperty("user.dir");
+        String projectPath = System.getProperty("user.dir") + "/spring-mybatis-plus-demo";
         gc.setOutputDir(projectPath + "/src/main/java");
         gc.setAuthor("xingshuang");
         gc.setOpen(false);
         // 实体属性 Swagger2 注解
-        gc.setSwagger2(true);
+//        gc.setSwagger2(true);
+
+//        gc.setFileOverride(true);
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/spray_glaze?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&&serverTimezone=GMT%2B8");
+        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/power?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&&serverTimezone=GMT%2B8");
         // dsc.setSchemaName("public");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
@@ -76,7 +78,7 @@ public class CodeGenerator {
         // 包配置
         PackageConfig pc = new PackageConfig();
 //        pc.setModuleName(scanner("模块名"));
-        pc.setModuleName("spring-mybaits-plus-demo");
+//        pc.setModuleName("tb");
         pc.setParent("com.huibo.mybatis.plus.demo");
         mpg.setPackageInfo(pc);
 
@@ -89,9 +91,9 @@ public class CodeGenerator {
         };
 
         // 如果模板引擎是 freemarker
-//        String templatePath = "/templates/mapper.xml.ftl";
+        String templatePath = "/templates/mapper.xml.ftl";
         // 如果模板引擎是 velocity
-         String templatePath = "/templates/mapper.xml.vm";
+//         String templatePath = "/templates/mapper.xml.vm";
 
         // 自定义输出配置
         List<FileOutConfig> focList = new ArrayList<>();
@@ -100,8 +102,10 @@ public class CodeGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-                return projectPath + "/src/main/resources/mapper/" + pc.getModuleName()
-                        + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
+//                return projectPath + "/spring-mybatis-plus-demo/src/main/resources/mapper/" + pc.getModuleName()
+//                        + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
+                return projectPath + "/src/main/resources/mapper/"
+                        + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
         });
         /*
@@ -133,17 +137,18 @@ public class CodeGenerator {
         StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-        strategy.setSuperEntityClass("com.huibo.mybatis.plus.demo.common.BaseEntity");
+//        strategy.setSuperEntityClass("com.huibo.mybatis.plus.demo.common.BaseEntity");
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
         // 公共父类
-        strategy.setSuperControllerClass("com.huibo.mybatis.plus.demo.common.BaseController");
+//        strategy.setSuperControllerClass("com.huibo.mybatis.plus.demo.common.BaseController");
         // 写于父类中的公共字段
-        strategy.setSuperEntityColumns("id");
+//        strategy.setSuperEntityColumns("id");
 //        strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
-        strategy.setInclude("tb_device_alarm_info");
+        strategy.setInclude("sys_user","sys_role","sys_user_role","sys_role_menu","sys_menu");
         strategy.setControllerMappingHyphenStyle(true);
-        strategy.setTablePrefix(pc.getModuleName() + "_");
+//        strategy.setTablePrefix(pc.getModuleName() + "_");
+        strategy.setTablePrefix("sys_");
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();
