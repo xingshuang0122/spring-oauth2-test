@@ -28,10 +28,11 @@ public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> i
 
     @Override
     public Boolean saveOrUpdate(Long userId, List<Long> roleIdList) {
+        Preconditions.checkNotNull(roleIdList, ExceptionMessage.NULL_POINT + "[roleIdList]");
         Preconditions.checkArgument(!roleIdList.isEmpty(), ExceptionMessage.COUNT_ZERO + "[roleIdList]");
         log.debug(String.format("保存或更新，userId=%s，roleIdList=%s", userId, roleIdList));
-        this.remove(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, userId));
 
+        this.remove(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, userId));
         List<UserRole> userRoleList = roleIdList.stream().map(item -> {
             UserRole userRole = new UserRole();
             userRole.setUserId(userId);

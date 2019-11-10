@@ -21,6 +21,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
 
     @Override
     public List<Long> queryRoleIdList(Long userId) {
-        return baseMapper.queryRoleIdList(userId);
+        log.debug(String.format("根据用户id查询角色id列表，userId=%s", userId));
+        return this.baseMapper.queryRoleIdList(userId);
     }
 }

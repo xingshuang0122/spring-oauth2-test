@@ -1,25 +1,19 @@
 package com.huibo.mybatis.plus.demo.controller;
 
 
-import com.baomidou.mybatisplus.extension.api.R;
 import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
 import com.huibo.mybatis.plus.demo.common.ResponseResult;
-import com.huibo.mybatis.plus.demo.constant.UserConstant;
 import com.huibo.mybatis.plus.demo.entity.User;
 import com.huibo.mybatis.plus.demo.service.IRoleService;
 import com.huibo.mybatis.plus.demo.service.IUserService;
-import com.huibo.mybatis.plus.demo.service.impl.UserServiceImpl;
-import com.huibo.mybatis.plus.demo.utils.PageUtils;
+import com.huibo.mybatis.plus.demo.common.PageWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -51,7 +45,10 @@ public class UserController {
     }
 
     /**
-     * 用户信息
+     * 查询用户信息
+     *
+     * @param userId 用户Id
+     * @return 响应结果
      */
     @ApiOperation(value = "根据用户Id查询用户信息", notes = "根据用户Id查询用户信息", httpMethod = "GET", response = ResponseResult.class)
     @GetMapping("/{userId}")
@@ -66,7 +63,13 @@ public class UserController {
     }
 
     /**
-     * 所有用户列表
+     * 所有用户列表，按页查询
+     *
+     * @param page     页面索引
+     * @param size     页面大小
+     * @param userId   用户id
+     * @param username 待查询的用户名
+     * @return 响应结果
      */
     @ApiOperation(value = "按页查询用户信息", notes = "按页查询用户信息", httpMethod = "POST", response = ResponseResult.class)
     @PostMapping("/list")
@@ -75,21 +78,61 @@ public class UserController {
                                @RequestParam Long userId,
                                @RequestParam(required = false) String username) {
         log.info("按页查询用户信息，page={}，size={}，userId={}，username={}", page, size, userId, username);
-        //只有超级管理员，才能查看所有管理员列表
-        PageUtils result = this.userService.queryByPage(page, size, userId, username);
+
+        PageWrapper result = this.userService.queryByPage(page, size, userId, username);
         return ResponseResult.succeed(result);
     }
 
     /**
-     * 保存用户
+     * 保存用户，也是添加用户
+     *
+     * @param user 用户信息
+     * @return 响应结果
      */
-    @ApiOperation(value = "按页查询用户信息", notes = "按页查询用户信息", httpMethod = "POST", response = ResponseResult.class)
-    @PostMapping("/save")
+    @ApiOperation(value = "保存用户信息", notes = "保存用户信息", httpMethod = "POST", response = ResponseResult.class)
+    @PostMapping("/")
     public ResponseResult save(@RequestBody User user) {
         log.info("保存用户信息，userId={}", user);
 
+        // TODO: 设定修改的用户Id，登录之后才有这个用户ID
         user.setCreateUserId(1L);
         Boolean b = this.userService.saveUser(user);
+        return b ? ResponseResult.succeed() : ResponseResult.fail();
+    }
+
+    /**
+     * 更新用户信息
+     *
+     * @param userId 用户Id
+     * @param user   用户信息
+     * @return 响应结果
+     */
+    @ApiOperation(value = "更新用户信息", notes = "更新用户信息", httpMethod = "PUT", response = ResponseResult.class)
+    @PutMapping("/{userId}")
+    public ResponseResult update(@PathVariable("userId") Long userId, @RequestBody User user) {
+        log.info("根据userId更新用户信息，userId={}，user={}", userId, user);
+
+        // TODO: 设定修改的用户Id，登录之后才有这个用户ID
+        user.setCreateUserId(1L);
+        user.setUserId(userId);
+        Boolean b = this.userService.update(user);
+        return b ? ResponseResult.succeed() : ResponseResult.fail();
+    }
+
+    /**
+     * 删除用户
+     *
+     * @param userIds 用户id列表
+     * @return 响应结果
+     */
+    @DeleteMapping("/list")
+    public ResponseResult delete(@RequestBody List<Long> userIds) {
+        if (userIds.contains(1L)) {
+            return ResponseResult.fail("系统管理员不能删除");
+        }
+
+        // TODO:无法删除自己，登录之后才能获取这个ID
+        boolean b = this.userService.deleteBatch(userIds);
         return b ? ResponseResult.succeed() : ResponseResult.fail();
     }
 }

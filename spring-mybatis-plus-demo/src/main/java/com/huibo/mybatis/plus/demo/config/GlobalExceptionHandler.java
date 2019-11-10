@@ -11,8 +11,13 @@
 
 package com.huibo.mybatis.plus.demo.config;
 
+import com.baomidou.mybatisplus.extension.api.R;
 import com.huibo.mybatis.plus.demo.common.ResponseResult;
+import com.huibo.mybatis.plus.demo.constant.ExceptionMessage;
+import com.huibo.mybatis.plus.demo.constant.StatusCode;
+import com.huibo.mybatis.plus.demo.exceptions.CustomException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,6 +33,32 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    /**
+     * 数据库数据重复异常
+     *
+     * @param e 异常
+     * @return 数据重复的返回结果
+     */
+    @ExceptionHandler(DuplicateKeyException.class)
+    @ResponseBody
+    public ResponseResult handleDuplicateKeyException(DuplicateKeyException e) {
+        log.error(e.getMessage(), e);
+        return ResponseResult.fail(ExceptionMessage.RECORD_EXIST);
+    }
+
+    /**
+     * 自定义异常的返回结果
+     *
+     * @param e 异常
+     * @return 自定义的返回结果
+     */
+    @ExceptionHandler(CustomException.class)
+    @ResponseBody
+    public ResponseResult customException(CustomException e) {
+        log.error(e.getMessage(), e);
+        return ResponseResult.fail(e.getMessage());
+    }
 
     /**
      * 运行时的异常

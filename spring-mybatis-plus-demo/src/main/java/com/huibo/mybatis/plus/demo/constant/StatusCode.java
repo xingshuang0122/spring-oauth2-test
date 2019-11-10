@@ -29,4 +29,9 @@ public class StatusCode {
      * 成功
      */
     public static final  Integer SUCCESS = 2000;
+
+    /**
+     * 数据库重复记录
+     */
+    public static final  Integer RECORD_EXIST = 1001;
 }

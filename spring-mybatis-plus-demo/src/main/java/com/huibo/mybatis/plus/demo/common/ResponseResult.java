@@ -119,7 +119,7 @@ public class ResponseResult<T> implements Serializable {
      * @return 响应结果
      */
     public static ResponseResult succeed() {
-        return new ResponseResult(true, StatusCode.SUCCESS);
+        return new ResponseResult(true, StatusCode.SUCCESS, DEFAULT_SUCCESS_MESSAGE);
     }
 
     /**
