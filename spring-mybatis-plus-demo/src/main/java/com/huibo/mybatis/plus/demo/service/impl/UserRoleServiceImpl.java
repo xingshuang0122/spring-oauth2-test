@@ -9,6 +9,7 @@ import com.huibo.mybatis.plus.demo.entity.UserRole;
 import com.huibo.mybatis.plus.demo.mapper.UserRoleMapper;
 import com.huibo.mybatis.plus.demo.service.IUserRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
  * @author xingshuang
  * @since 2019-11-09
  */
+@Slf4j
 @Service
 public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> implements IUserRoleService {
 
@@ -30,7 +32,7 @@ public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> i
     public Boolean saveOrUpdate(Long userId, List<Long> roleIdList) {
         Preconditions.checkNotNull(roleIdList, ExceptionMessage.NULL_POINT + "[roleIdList]");
         Preconditions.checkArgument(!roleIdList.isEmpty(), ExceptionMessage.COUNT_ZERO + "[roleIdList]");
-        log.debug(String.format("保存或更新，userId=%s，roleIdList=%s", userId, roleIdList));
+        log.debug("保存或更新，userId={}，roleIdList={}", userId, roleIdList);
 
         this.remove(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, userId));
         List<UserRole> userRoleList = roleIdList.stream().map(item -> {

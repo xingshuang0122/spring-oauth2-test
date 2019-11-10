@@ -32,6 +32,7 @@ import java.util.List;
  * @author xingshuang
  * @since 2019-11-09
  */
+@Slf4j
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
@@ -61,7 +62,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         Preconditions.checkArgument(page > 0, ExceptionMessage.INVALID_PARAM + "[page]");
         Preconditions.checkArgument(size > 0, ExceptionMessage.INVALID_PARAM + "[size]");
         Preconditions.checkArgument(userId > 0, ExceptionMessage.INVALID_PARAM + "[size]");
-        log.debug(String.format("按页查询用户信息，page=%s，size=%s，userId=%s，username=%s", page, size, userId, username));
+        log.debug("按页查询用户信息，page={}，size={}，userId={}，username={}", page, size, userId, username);
 
         Page<User> p = new Page<>(page, size);
         LambdaQueryWrapper<User> condition = Wrappers.<User>lambdaQuery()
@@ -78,7 +79,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         Preconditions.checkNotNull(user, ExceptionMessage.NULL_POINT + "[user]");
         Preconditions.checkArgument(!Strings.isNullOrEmpty(user.getPassword()), ExceptionMessage.INVALID_PARAM + "[password]");
         Preconditions.checkArgument(!Strings.isNullOrEmpty(user.getUsername()), ExceptionMessage.INVALID_PARAM + "[username]");
-        log.debug(String.format("保存用户信息，user=%s", user));
+        log.debug("保存用户信息，user={}", user);
 
         // 重名校验，已通过数据库唯一键的形式进行校验，无需采用代码验证
         user.setPassword(this.encoder.encode(user.getPassword()));
@@ -98,7 +99,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public Boolean update(User user) {
         Preconditions.checkNotNull(user, ExceptionMessage.NULL_POINT + "[user]");
         Preconditions.checkNotNull(user.getUserId(), ExceptionMessage.NULL_POINT + "[userId]");
-        log.debug(String.format("更新用户信息，user=%s", user));
+        log.debug("更新用户信息，user={}", user);
 
         // 重名校验，已通过数据库唯一键的形式进行校验，无需采用代码验证
         // 密码为空则不进行修改
@@ -123,7 +124,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public Boolean deleteBatch(List<Long> userIds) {
         Preconditions.checkNotNull(userIds, ExceptionMessage.NULL_POINT + "[userIds]");
         Preconditions.checkArgument(!userIds.isEmpty(), ExceptionMessage.INVALID_PARAM + "[userIds]");
-        log.debug(String.format("批量删除用户信息，userIds=%s", userIds));
+        log.debug("批量删除用户信息，userIds={}", userIds);
 
         // 移除用户角色关联表信息
         this.userRoleService.remove(Wrappers.<UserRole>lambdaQuery().in(UserRole::getUserId, userIds));
