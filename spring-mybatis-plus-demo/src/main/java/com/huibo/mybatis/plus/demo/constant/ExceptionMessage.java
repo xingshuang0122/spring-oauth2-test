@@ -26,5 +26,6 @@ public class ExceptionMessage {
     public static final String COUNT_ZERO = "个数为0";
     public static final String USERNAME_EXIST = "用户名已存在";
     public static final String RECORD_EXIST = "数据库中唯一标识的数据重复";
+    public static final String NOT_FOUND = "未查询到数据";
 
 }

@@ -2,6 +2,9 @@ package com.huibo.mybatis.plus.demo.mapper;
 
 import com.huibo.mybatis.plus.demo.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface UserMapper extends BaseMapper<User> {
 
+    @Select("select distinct rm.menu_id from sys_user_role ur LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id where ur.user_id = #{userId}")
+    List<Long> queryAllMenuId(Long userId);
 }

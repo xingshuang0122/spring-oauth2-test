@@ -45,8 +45,17 @@ public interface IUserService extends IService<User> {
 
     /**
      * 批量删除用户信息
+     *
      * @param userIds 用户的ids
      * @return 是否执行成功
      */
     Boolean deleteBatch(List<Long> userIds);
+
+    /**
+     * 根据用户Id查询菜单列表Id
+     *
+     * @param userId 用户Id
+     * @return 菜单列表Id
+     */
+    List<Long> queryAllMenuId(Long userId);
 }

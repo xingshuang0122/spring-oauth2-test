@@ -44,4 +44,11 @@ public class UserRole implements Serializable {
     private LocalDateTime gmtCreate;
 
 
+    public UserRole() {
+    }
+
+    public UserRole(Long userId, Long roleId) {
+        this.userId = userId;
+        this.roleId = roleId;
+    }
 }

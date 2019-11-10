@@ -57,12 +57,12 @@ public class Menu implements Serializable {
     private Integer type;
 
     /**
-     * 菜单等级
+     * 菜单等级 1:1级，2:2级，3:3级
      */
     private Integer levelNum;
 
     /**
-     * 能否擦除
+     * 能否擦除 0：不能擦除 1：能擦除
      */
     private Integer erase;
 

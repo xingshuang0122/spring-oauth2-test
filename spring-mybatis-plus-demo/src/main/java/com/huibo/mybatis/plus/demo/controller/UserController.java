@@ -3,11 +3,14 @@ package com.huibo.mybatis.plus.demo.controller;
 
 import com.google.common.base.Preconditions;
 import com.huibo.mybatis.plus.demo.common.ResponseResult;
+import com.huibo.mybatis.plus.demo.constant.ExceptionMessage;
 import com.huibo.mybatis.plus.demo.entity.User;
 import com.huibo.mybatis.plus.demo.service.IRoleService;
+import com.huibo.mybatis.plus.demo.service.IUserRoleService;
 import com.huibo.mybatis.plus.demo.service.IUserService;
 import com.huibo.mybatis.plus.demo.common.PageWrapper;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,17 +34,17 @@ public class UserController {
 
     private final IUserService userService;
 
-    private final IRoleService roleService;
+    private final IUserRoleService userRoleService;
 
 
     @Autowired
     public UserController(IUserService userService,
-                          IRoleService roleService) {
+                          IUserRoleService userRoleService) {
         Preconditions.checkNotNull(userService);
-        Preconditions.checkNotNull(roleService);
+        Preconditions.checkNotNull(userRoleService);
 
         this.userService = userService;
-        this.roleService = roleService;
+        this.userRoleService = userRoleService;
     }
 
     /**
@@ -51,13 +54,16 @@ public class UserController {
      * @return 响应结果
      */
     @ApiOperation(value = "根据用户Id查询用户信息", notes = "根据用户Id查询用户信息", httpMethod = "GET", response = ResponseResult.class)
+    @ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "int", example = "1")
     @GetMapping("/{userId}")
     public ResponseResult info(@PathVariable("userId") Long userId) {
         log.info("根据用户Id查询用户信息，userId={}", userId);
         User user = this.userService.getById(userId);
-
+        if (user == null) {
+            return ResponseResult.fail(ExceptionMessage.NOT_FOUND);
+        }
         //获取用户所属的角色列表
-        List<Long> roleIdList = roleService.queryRoleIdList(userId);
+        List<Long> roleIdList = this.userRoleService.queryRoleIdList(userId);
         user.setRoleIdList(roleIdList);
         return ResponseResult.succeed(user);
     }

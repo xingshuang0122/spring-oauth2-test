@@ -43,5 +43,11 @@ public class RoleMenu implements Serializable {
      */
     private LocalDateTime gmtCreate;
 
+    public RoleMenu() {
+    }
 
+    public RoleMenu(Long roleId, Long menuId) {
+        this.roleId = roleId;
+        this.menuId = menuId;
+    }
 }

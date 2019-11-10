@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResponseResult handleDuplicateKeyException(DuplicateKeyException e) {
         log.error(e.getMessage(), e);
-        return ResponseResult.fail(ExceptionMessage.RECORD_EXIST);
+        return ResponseResult.fail(StatusCode.DUPLICATE, ExceptionMessage.RECORD_EXIST);
     }
 
     /**

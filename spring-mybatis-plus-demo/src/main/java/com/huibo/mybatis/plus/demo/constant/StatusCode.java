@@ -19,19 +19,19 @@ package com.huibo.mybatis.plus.demo.constant;
  * @date 2019/11/9
  */
 public class StatusCode {
-
-    /**
-     * 失败
-     */
-    public static final  Integer FAILURE = 1000;
-
     /**
      * 成功
      */
     public static final  Integer SUCCESS = 2000;
 
     /**
-     * 数据库重复记录
+     * 失败
      */
-    public static final  Integer RECORD_EXIST = 1001;
+    public static final  Integer FAILURE = 1000;
+
+
+    /**
+     * 数据库唯一键重复记
+     */
+    public static final  Integer DUPLICATE = 1001;
 }

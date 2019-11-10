@@ -1,5 +1,6 @@
 package com.huibo.mybatis.plus.demo.service;
 
+import com.huibo.mybatis.plus.demo.common.PageWrapper;
 import com.huibo.mybatis.plus.demo.entity.Role;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -15,11 +16,7 @@ import java.util.List;
  */
 public interface IRoleService extends IService<Role> {
 
-    /**
-     * 根据用户Id查询角色Id
-     *
-     * @param userId 用户id
-     * @return 角色id列表
-     */
-    List<Long> queryRoleIdList(Long userId);
+    PageWrapper queryByPage(Long page, Long size, String roleName);
+
+    Boolean saveRole(Role role);
 }

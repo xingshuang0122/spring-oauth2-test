@@ -15,5 +15,13 @@ import java.util.List;
  */
 public interface IUserRoleService extends IService<UserRole> {
 
+    /**
+     * 根据用户Id查询角色Id
+     *
+     * @param userId 用户id
+     * @return 角色id列表
+     */
+    List<Long> queryRoleIdList(Long userId);
+
     Boolean saveOrUpdate(Long userId, List<Long> roleIdList);
 }

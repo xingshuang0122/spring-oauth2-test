@@ -29,18 +29,20 @@ import java.util.stream.Collectors;
 public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> implements IUserRoleService {
 
     @Override
+    public List<Long> queryRoleIdList(Long userId) {
+        log.debug("根据用户id查询角色id列表，userId={}", userId);
+        return this.baseMapper.queryRoleIdList(userId);
+    }
+
+    @Override
     public Boolean saveOrUpdate(Long userId, List<Long> roleIdList) {
         Preconditions.checkNotNull(roleIdList, ExceptionMessage.NULL_POINT + "[roleIdList]");
         Preconditions.checkArgument(!roleIdList.isEmpty(), ExceptionMessage.COUNT_ZERO + "[roleIdList]");
-        log.debug("保存或更新，userId={}，roleIdList={}", userId, roleIdList);
+        log.debug("保存或更新用户和角色关系表信息，userId={}，roleIdList={}", userId, roleIdList);
 
         this.remove(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, userId));
-        List<UserRole> userRoleList = roleIdList.stream().map(item -> {
-            UserRole userRole = new UserRole();
-            userRole.setUserId(userId);
-            userRole.setRoleId(item);
-            return userRole;
-        }).collect(Collectors.toList());
+        List<UserRole> userRoleList = roleIdList.stream()
+                .map(roleId -> new UserRole(userId, roleId)).collect(Collectors.toList());
         return this.saveOrUpdateBatch(userRoleList);
     }
 }

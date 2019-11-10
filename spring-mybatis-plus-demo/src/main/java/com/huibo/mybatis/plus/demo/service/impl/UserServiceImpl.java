@@ -3,19 +3,18 @@ package com.huibo.mybatis.plus.demo.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import com.huibo.mybatis.plus.demo.common.PageWrapper;
 import com.huibo.mybatis.plus.demo.constant.ExceptionMessage;
 import com.huibo.mybatis.plus.demo.constant.UserConstant;
 import com.huibo.mybatis.plus.demo.entity.User;
 import com.huibo.mybatis.plus.demo.entity.UserRole;
 import com.huibo.mybatis.plus.demo.exceptions.CustomException;
 import com.huibo.mybatis.plus.demo.mapper.UserMapper;
-import com.huibo.mybatis.plus.demo.service.IRoleService;
 import com.huibo.mybatis.plus.demo.service.IUserRoleService;
 import com.huibo.mybatis.plus.demo.service.IUserService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.huibo.mybatis.plus.demo.common.PageWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -38,21 +37,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     private final IUserRoleService userRoleService;
 
-    private final IRoleService roleService;
-
     private final BCryptPasswordEncoder encoder;
 
     @Autowired
     public UserServiceImpl(BCryptPasswordEncoder encoder,
-                           IUserRoleService userRoleService,
-                           IRoleService roleService) {
+                           IUserRoleService userRoleService) {
         Preconditions.checkNotNull(encoder);
         Preconditions.checkNotNull(userRoleService);
-        Preconditions.checkNotNull(roleService);
 
         this.encoder = encoder;
         this.userRoleService = userRoleService;
-        this.roleService = roleService;
     }
 
     //region 公有接口方法
@@ -69,7 +63,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                 // 只有超级管理员，才能查看所有管理员列表
                 .eq(userId != UserConstant.SUPER_ADMIN, User::getCreateUserId, userId)
                 // 如果有查询用户名，则针对该用户名进行查询
-                .eq(!Strings.isNullOrEmpty(username), User::getUsername, username);
+                .like(!Strings.isNullOrEmpty(username), User::getUsername, username);
         return new PageWrapper(this.page(p, condition));
     }
 
@@ -85,10 +79,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         user.setPassword(this.encoder.encode(user.getPassword()));
         // 保存用户
         this.save(user);
-        // 校验添加角色是否都是该用户创建的
-        this.checkRolesCreator(user);
+
         // 如果有角色id，就添加角色信息
         if (user.getRoleIdList() != null && !user.getRoleIdList().isEmpty()) {
+            // 校验添加角色是否都是该用户创建的
+            this.checkRolesCreator(user);
             this.userRoleService.saveOrUpdate(user.getUserId(), user.getRoleIdList());
         }
         return true;
@@ -110,10 +105,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }
         // 更新用户
         this.updateById(user);
-        // 校验添加角色是否都是该用户创建的
-        this.checkRolesCreator(user);
+
         // 如果有角色id，就添加角色信息
         if (user.getRoleIdList() != null && !user.getRoleIdList().isEmpty()) {
+            // 校验添加角色是否都是该用户创建的
+//            this.checkRolesCreator(user);
             this.userRoleService.saveOrUpdate(user.getUserId(), user.getRoleIdList());
         }
         return true;
@@ -131,6 +127,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return this.removeByIds(userIds);
     }
 
+    @Override
+    public List<Long> queryAllMenuId(Long userId) {
+        Preconditions.checkArgument(userId>0,ExceptionMessage.INVALID_PARAM + "[userId]");
+        log.debug("查询用户拥有的菜单，userId={}", userId);
+
+        return this.baseMapper.queryAllMenuId(userId);
+    }
+
     //endregion
 
 
@@ -140,15 +144,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * 校验添加角色是否都是该用户创建的，如果是超级管理员，则不要校验
      */
     private void checkRolesCreator(User user) {
-        if (user.getRoleIdList() == null || user.getRoleIdList().isEmpty()) {
-            return;
-        }
         // 如果不是超级管理员，则需要判断用户的角色是否自己创建
         if (user.getCreateUserId() == UserConstant.SUPER_ADMIN) {
             return;
         }
         // 查询用户创建的角色列表
-        List<Long> roleIdList = this.roleService.queryRoleIdList(user.getCreateUserId());
+        List<Long> roleIdList = this.userRoleService.queryRoleIdList(user.getCreateUserId());
         // 判断是否越权
         if (!roleIdList.containsAll(user.getRoleIdList())) {
             throw new CustomException("新增用户所选角色，不是本人创建");
