@@ -57,6 +57,7 @@ public class UserController {
     @ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "int", example = "1")
     @GetMapping("/{userId}")
     public ResponseResult info(@PathVariable("userId") Long userId) {
+        long start = System.currentTimeMillis();
         log.info("根据用户Id查询用户信息，userId={}", userId);
         User user = this.userService.getById(userId);
         if (user == null) {
@@ -65,6 +66,7 @@ public class UserController {
         //获取用户所属的角色列表
         List<Long> roleIdList = this.userRoleService.queryRoleIdList(userId);
         user.setRoleIdList(roleIdList);
+        log.info("耗时：{}", System.currentTimeMillis() - start);
         return ResponseResult.succeed(user);
     }
 
