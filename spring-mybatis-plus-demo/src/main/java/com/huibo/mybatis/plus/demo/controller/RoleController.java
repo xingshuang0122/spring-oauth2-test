@@ -9,6 +9,8 @@ import com.huibo.mybatis.plus.demo.entity.Role;
 import com.huibo.mybatis.plus.demo.service.IRoleMenuService;
 import com.huibo.mybatis.plus.demo.service.IRoleService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +53,7 @@ public class RoleController {
      * @return 响应结果
      */
     @ApiOperation(value = "根据角色Id查询角色信息", notes = "根据角色Id查询角色信息", httpMethod = "GET", response = ResponseResult.class)
+    @ApiImplicitParam(name = "roleId", value = "角色id", required = true, dataType = "int", example = "5")
     @GetMapping("/{roleId}")
     public ResponseResult info(@PathVariable("roleId") Long roleId) {
         log.info("根据角色Id查询角色信息，roleId={}", roleId);
@@ -73,7 +76,12 @@ public class RoleController {
      * @return 响应结果
      */
     @ApiOperation(value = "按页查询角色信息", notes = "按页查询角色信息", httpMethod = "POST", response = ResponseResult.class)
-    @PostMapping("/list")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "当前页码", required = true, dataType = "int", example = "1"),
+            @ApiImplicitParam(name = "size", value = "显示个数", required = true, dataType = "int", example = "10"),
+            @ApiImplicitParam(name = "roleName", value = "角色名称", required = false, dataType = "string", example = "")
+    })
+    @PostMapping("/list/page")
     public ResponseResult list(@RequestParam Long page,
                                @RequestParam Long size,
                                @RequestParam(required = false) String roleName) {

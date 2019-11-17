@@ -11,6 +11,7 @@ import com.huibo.mybatis.plus.demo.service.IUserService;
 import com.huibo.mybatis.plus.demo.common.PageWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,6 +81,12 @@ public class UserController {
      * @return 响应结果
      */
     @ApiOperation(value = "按页查询用户信息", notes = "按页查询用户信息", httpMethod = "POST", response = ResponseResult.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "当前页码", required = true, dataType = "int", example = "1"),
+            @ApiImplicitParam(name = "size", value = "显示个数", required = true, dataType = "int", example = "10"),
+            @ApiImplicitParam(name = "userId", value = "用户Id", required = true, dataType = "int", example = "1"),
+            @ApiImplicitParam(name = "username", value = "用户名", required = false, dataType = "string", example = "")
+    })
     @PostMapping("/list")
     public ResponseResult list(@RequestParam Long page,
                                @RequestParam Long size,
@@ -116,6 +123,7 @@ public class UserController {
      * @return 响应结果
      */
     @ApiOperation(value = "更新用户信息", notes = "更新用户信息", httpMethod = "PUT", response = ResponseResult.class)
+    @ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "int", example = "1")
     @PutMapping("/{userId}")
     public ResponseResult update(@PathVariable("userId") Long userId, @RequestBody User user) {
         log.info("根据userId更新用户信息，userId={}，user={}", userId, user);
@@ -133,6 +141,7 @@ public class UserController {
      * @param userIds 用户id列表
      * @return 响应结果
      */
+    @ApiOperation(value = "批量删除用户", notes = "批量删除用户", httpMethod = "DELETE", response = ResponseResult.class)
     @DeleteMapping("/list")
     public ResponseResult delete(@RequestBody List<Long> userIds) {
         if (userIds.contains(1L)) {
