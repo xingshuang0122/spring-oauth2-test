@@ -9,18 +9,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserRoleServiceImplTest {
 
     @Autowired
-    private IUserRoleService iUserRoleService;
+    private IUserRoleService userRoleService;
 
     @Test
     public void queryRoleIdList() {
-        List<Long> list = this.iUserRoleService.queryRoleIdList(9L);
+        List<Long> list = this.userRoleService.queryRoleIdList(9L);
         list.forEach(System.out::println);
     }
 }

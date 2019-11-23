@@ -83,6 +83,24 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
         return true;
     }
 
+    @Override
+    @Transactional(rollbackFor = RuntimeException.class)
+    public Boolean update(Role role) {
+        Preconditions.checkNotNull(role, ExceptionMessage.NULL_POINT + "[role]");
+        Preconditions.checkNotNull(role.getRoleId(), ExceptionMessage.NULL_POINT + "[roleId]");
+        log.debug("更新角色信息，role={}", role);
+
+        this.updateById(role);
+
+        // 如果有菜单id，就添加菜单信息
+        if (role.getMenuIdList() != null && !role.getMenuIdList().isEmpty()) {
+            // 校验添加菜单是否都是该用户创建的
+//            this.checkPermsCreator(role);
+            this.roleMenuService.saveOrUpdate(role.getRoleId(), role.getMenuIdList());
+        }
+        return true;
+    }
+
     //endregion
 
 

@@ -44,6 +44,7 @@ public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuMapper, RoleMenu> i
 
         // 移除原来的相关数据
         this.remove(Wrappers.<RoleMenu>lambdaQuery().eq(RoleMenu::getRoleId, roleId));
+        // 生成新的角色和菜单关系列表
         List<RoleMenu> userRoleList = menuIdList.stream()
                 .map(menuId -> new RoleMenu(roleId, menuId)).collect(Collectors.toList());
         return this.saveOrUpdateBatch(userRoleList);

@@ -105,28 +105,28 @@ public class RoleController {
 
         // TODO: 设定修改的角色Id，登录之后才有这个用户ID
         role.setCreateUserId(1L);
-        Boolean b = this.roleService.saveRole(role);
+        boolean b = this.roleService.saveRole(role);
         return b ? ResponseResult.succeed() : ResponseResult.fail();
     }
-//
-//    /**
-//     * 更新角色信息
-//     *
-//     * @param roleId 角色Id
-//     * @param role   角色信息
-//     * @return 响应结果
-//     */
-//    @ApiOperation(value = "更新角色信息", notes = "更新角色信息", httpMethod = "PUT", response = ResponseResult.class)
-//    @PutMapping("/{roleId}")
-//    public ResponseResult update(@PathVariable("roleId") Long roleId, @RequestBody Role role) {
-//        log.info("根据roleId更新角色信息，roleId={}，role={}", roleId, role);
-//
-//        // TODO: 设定修改的角色Id，登录之后才有这个角色ID
-//        role.setCreateroleId(1L);
-//        role.setroleId(roleId);
-//        Boolean b = this.roleService.update(role);
-//        return b ? ResponseResult.succeed() : ResponseResult.fail();
-//    }
+
+    /**
+     * 更新角色信息
+     *
+     * @param roleId 角色Id
+     * @param role   角色信息
+     * @return 响应结果
+     */
+    @ApiOperation(value = "更新角色信息", notes = "更新角色信息", httpMethod = "PUT", response = ResponseResult.class)
+    @PutMapping("/{roleId}")
+    public ResponseResult update(@PathVariable("roleId") Long roleId, @RequestBody Role role) {
+        log.info("根据roleId更新角色信息，roleId={}，role={}", roleId, role);
+
+        // TODO: 设定修改的角色Id，登录之后才有这个角色ID
+        role.setCreateUserId(1L);
+        role.setRoleId(roleId);
+        boolean b = this.roleService.update(role);
+        return b ? ResponseResult.succeed() : ResponseResult.fail();
+    }
 //
 //    /**
 //     * 删除角色
