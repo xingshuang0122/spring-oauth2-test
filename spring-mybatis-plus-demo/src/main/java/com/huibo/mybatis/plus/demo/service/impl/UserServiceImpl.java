@@ -55,7 +55,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public PageWrapper queryByPage(Long page, Long size, Long userId, String username) {
         Preconditions.checkArgument(page > 0, ExceptionMessage.INVALID_PARAM + "[page]");
         Preconditions.checkArgument(size > 0, ExceptionMessage.INVALID_PARAM + "[size]");
-        Preconditions.checkArgument(userId > 0, ExceptionMessage.INVALID_PARAM + "[size]");
+        Preconditions.checkArgument(userId > 0, ExceptionMessage.INVALID_PARAM + "[userId]");
         log.debug("按页查询用户信息，page={}，size={}，userId={}，username={}", page, size, userId, username);
 
         Page<User> p = new Page<>(page, size);

@@ -1,0 +1,26 @@
+package com.huibo.mybatis.plus.demo.service.impl;
+
+import com.huibo.mybatis.plus.demo.service.IUserRoleService;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
+
+import static org.junit.Assert.*;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class UserRoleServiceImplTest {
+
+    @Autowired
+    private IUserRoleService iUserRoleService;
+
+    @Test
+    public void queryRoleIdList() {
+        List<Long> list = this.iUserRoleService.queryRoleIdList(9L);
+        list.forEach(System.out::println);
+    }
+}

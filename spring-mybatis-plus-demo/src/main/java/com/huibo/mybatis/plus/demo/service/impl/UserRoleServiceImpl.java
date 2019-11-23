@@ -1,18 +1,15 @@
 package com.huibo.mybatis.plus.demo.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
 import com.huibo.mybatis.plus.demo.constant.ExceptionMessage;
-import com.huibo.mybatis.plus.demo.entity.User;
 import com.huibo.mybatis.plus.demo.entity.UserRole;
 import com.huibo.mybatis.plus.demo.mapper.UserRoleMapper;
 import com.huibo.mybatis.plus.demo.service.IUserRoleService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,7 +28,11 @@ public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> i
     @Override
     public List<Long> queryRoleIdList(Long userId) {
         log.debug("根据用户id查询角色id列表，userId={}", userId);
-        return this.baseMapper.queryRoleIdList(userId);
+
+        List<UserRole> userRoles = this.baseMapper.selectList(Wrappers.<UserRole>lambdaQuery()
+                .select(UserRole::getRoleId)
+                .eq(UserRole::getUserId, userId));
+        return userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toList());
     }
 
     @Override

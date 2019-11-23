@@ -29,7 +29,11 @@ public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuMapper, RoleMenu> i
     @Override
     public List<Long> queryMenuIdList(Long roleId) {
         log.debug("根据角色id查询菜单id列表，roleId={}", roleId);
-        return this.baseMapper.queryMenuIdList(roleId);
+
+        List<RoleMenu> userRoles = this.baseMapper.selectList(Wrappers.<RoleMenu>lambdaQuery()
+                .select(RoleMenu::getMenuId)
+                .eq(RoleMenu::getRoleId, roleId));
+        return userRoles.stream().map(RoleMenu::getMenuId).collect(Collectors.toList());
     }
 
     @Override
