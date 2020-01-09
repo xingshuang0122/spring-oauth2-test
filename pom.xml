@@ -23,6 +23,7 @@
         <module>spring-security-demo</module>
         <module>spring-influxdb-demo</module>
         <module>spring-mybatis-plus-demo</module>
+        <module>spring-jpa-demo</module>
     </modules>
 
 </project>
