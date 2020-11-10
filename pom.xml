@@ -24,6 +24,7 @@
         <module>spring-influxdb-demo</module>
         <module>spring-mybatis-plus-demo</module>
         <module>spring-jpa-demo</module>
+        <module>netty-demo</module>
     </modules>
 
 </project>
