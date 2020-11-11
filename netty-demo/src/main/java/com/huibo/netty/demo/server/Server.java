@@ -24,20 +24,22 @@ public class Server {
         try {
             // 服务端启动引导
             ServerBootstrap b = new ServerBootstrap();
-            // 绑定两个线程组
+            // 绑定两个线程组, 设置reactor 线程
             b.group(bossGroup, workerGroup)
-                    // 指定通道类型
+                    // 指定通道类型, 设置nio类型的channel
                     .channel(NioServerSocketChannel.class)
+                    .localAddress(8081)
                     // 设置TCP连接的缓冲区
                     .option(ChannelOption.SO_BACKLOG, 100)
                     // 设置日志级别
                     .handler(new LoggingHandler(LogLevel.INFO))
                     .childHandler(new ChannelInitializer<SocketChannel>() {
+                        // 有连接到达时会创建一个channel
                         @Override
-                        protected void initChannel(SocketChannel socketChannel) throws Exception {
+                        protected void initChannel(SocketChannel socketChannel) {
                             // 获取处理器链
                             ChannelPipeline pipeline = socketChannel.pipeline();
-                            // 添加新的件处理器
+                            // 添加新的件处理器, pipeline管理channel中的Handler, 在channel队列中添加一个handler来处理业务
                             pipeline.addLast(new EchoServerHandler());
                         }
                     });
