@@ -25,6 +25,7 @@
         <module>spring-mybatis-plus-demo</module>
         <module>spring-jpa-demo</module>
         <module>netty-demo</module>
+        <module>spring-service-user-demo</module>
     </modules>
 
 </project>

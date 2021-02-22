@@ -1,14 +1,3 @@
-/*
-  Copyright (C), 2017-2018, 江苏汇博机器人技术股份有限公司
-  FileName: Swagger2Config
-  Author:   ShuangPC
-  Date:     2018/9/28 11:33
-  Description:
-  History:
-  <author>         <time>          <version>          <desc>
-  作者姓名         修改时间           版本号             描述
- */
-
 package com.github.xingshuangs.mybatis.plus.demo.config;
 
 import org.springframework.context.annotation.Bean;

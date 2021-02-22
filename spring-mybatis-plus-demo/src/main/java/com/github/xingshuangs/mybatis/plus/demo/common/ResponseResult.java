@@ -1,14 +1,3 @@
-/*
-  Copyright (C), 2009-2019, 江苏汇博机器人技术股份有限公司
-  FileName: ResponseResult
-  Author:   ShuangPC
-  Date:     2019/5/31
-  Description:
-  History:
-  <author>         <time>          <version>          <desc>
-  作者姓名         修改时间           版本号             描述
- */
-
 package com.github.xingshuangs.mybatis.plus.demo.common;
 
 import com.github.xingshuangs.mybatis.plus.demo.constant.StatusCode;

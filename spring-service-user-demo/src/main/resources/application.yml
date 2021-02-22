@@ -1,0 +1,29 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: spring-service-user-demo
+  cloud:
+    nacos:
+      discovery:
+        #指定nacos注册中心地址
+        server-addr: 127.0.0.1:8848
+  redis:
+    host: 127.0.0.1
+    timeout: 30000ms
+    password: huibo1206
+    port: 6379
+    database: 0
+    lettuce:
+      pool:
+        max-active: 8 # 连接池最大连接数（使用负值表示没有限制）
+        max-idle: 8 # 连接池中的最大空闲连接
+        max-wait: -1ms #连接池最大阻塞等待时间（使用负值表示没有限制)
+        min-idle: 0 # 连接池中的最小空闲连接
+logging:
+  pattern:
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} %5level [%15thread] %-50.50(%logger{39}.%method:%-3line) - %msg%n"
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %yellow(%5level) [%15thread] %cyan(%-50.50(%logger{39}.%method:%-3line)) - %msg%n"
+  file:
+    name: ./logs/spring-service-user-demo/ddm-service-user.log

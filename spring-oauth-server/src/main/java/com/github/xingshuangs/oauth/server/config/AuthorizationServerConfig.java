@@ -1,14 +1,3 @@
-/*
-  Copyright (C), 2009-2019, 江苏汇博机器人技术股份有限公司
-  FileName: AuthorizationServerConfig
-  Author:   ShuangPC
-  Date:     2019/8/28
-  Description:
-  History:
-  <author>         <time>          <version>          <desc>
-  作者姓名         修改时间           版本号             描述
- */
-
 package com.github.xingshuangs.oauth.server.config;
 
 import org.springframework.beans.factory.annotation.Autowired;

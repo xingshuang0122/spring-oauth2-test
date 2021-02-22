@@ -1,14 +1,3 @@
-/*
-  Copyright (C), 2009-2019, 江苏汇博机器人技术股份有限公司
-  FileName: GlobalCorsConfig
-  Author:   ShuangPC
-  Date:     2019/2/26
-  Description: 全局跨域设置
-  History:
-  <author>         <time>          <version>          <desc>
-  作者姓名         修改时间           版本号             描述
- */
-
 package com.github.xingshuangs.mybatis.plus.demo.config;
 
 import org.springframework.context.annotation.Configuration;
