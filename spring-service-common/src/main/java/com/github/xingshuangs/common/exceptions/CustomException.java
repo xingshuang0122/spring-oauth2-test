@@ -1,4 +1,4 @@
-package com.github.xingshuangs.user.demo.exceptions;
+package com.github.xingshuangs.common.exceptions;
 
 
 import org.springframework.http.HttpStatus;

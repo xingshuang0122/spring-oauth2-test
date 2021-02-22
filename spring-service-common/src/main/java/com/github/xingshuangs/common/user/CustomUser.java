@@ -1,8 +1,8 @@
-package com.github.xingshuangs.user.demo.common;
+package com.github.xingshuangs.common.user;
 
 
-import com.github.xingshuangs.user.demo.utils.BeanUtils;
 import com.google.common.collect.Maps;
+import com.github.xingshuangs.common.utils.BeanUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,9 +25,9 @@ public class CustomUser extends User implements Serializable {
 
     private Integer tenantId = 33;
 
-    private String realName = "xingshuang";
+    private String realName = "邢双";
 
-    private String mobile = "18767111111";
+    private String mobile = "18767121684";
 
     private String email = "xingshuang_cool@163.com";
 

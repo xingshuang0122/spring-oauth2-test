@@ -17,7 +17,7 @@ import java.util.Map;
 public class CustomTokenEnhancer implements TokenEnhancer {
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-        Map<String, Object> additionalInfo = new HashMap<>(6);
+        Map<String, Object> additionalInfo = new HashMap<String, Object>(6);
 //        additionalInfo.put("userInfo", authentication.getPrincipal());
         additionalInfo.put("username", ((User)authentication.getPrincipal()).getUsername());
 //        additionalInfo.put("authorities", ((User)authentication.getPrincipal()).getAuthorities());

@@ -1,4 +1,4 @@
-package com.github.xingshuangs.user.demo.utils;
+package com.github.xingshuangs.common.utils;
 
 import com.google.common.net.HttpHeaders;
 

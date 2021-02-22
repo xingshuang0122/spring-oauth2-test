@@ -1,6 +1,6 @@
 package com.github.xingshuangs.user.demo.config;
 
-import com.github.xingshuangs.user.demo.common.CustomUser;
+import com.github.xingshuangs.common.user.CustomUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;

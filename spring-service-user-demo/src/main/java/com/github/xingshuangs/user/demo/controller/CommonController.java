@@ -1,10 +1,10 @@
 package com.github.xingshuangs.user.demo.controller;
 
 
+import com.github.xingshuangs.common.utils.HttpUtils;
 import com.github.xingshuangs.user.demo.config.CustomClientProperties;
 import com.github.xingshuangs.user.demo.dto.CustomAuthentication;
 import com.github.xingshuangs.user.demo.dto.LoginInfoDto;
-import com.github.xingshuangs.user.demo.utils.HttpUtils;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

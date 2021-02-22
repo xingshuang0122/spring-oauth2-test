@@ -1,6 +1,6 @@
 package com.github.xingshuangs.user.demo.service;
 
-import com.github.xingshuangs.user.demo.common.CustomUser;
+import com.github.xingshuangs.common.user.CustomUser;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

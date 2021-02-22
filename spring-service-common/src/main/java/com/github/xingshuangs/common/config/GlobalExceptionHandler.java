@@ -1,6 +1,6 @@
-package com.github.xingshuangs.user.demo.config;
+package com.github.xingshuangs.common.config;
 
-import com.github.xingshuangs.user.demo.exceptions.CustomException;
+import com.github.xingshuangs.common.exceptions.CustomException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;

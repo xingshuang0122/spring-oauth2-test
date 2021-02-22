@@ -8,11 +8,11 @@
         <version>2.2.6.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.github.xingshuangs</groupId>
-    <artifactId>spring-service-user-demo</artifactId>
+    <groupId>com.huibo.robot.ddm.monitor</groupId>
+    <artifactId>spring-service-monitor-demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>spring-service-user-demo</name>
+    <name>spring-service-monitor-demo</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -41,10 +41,10 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!--websocket-->
         <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-            <version>2.1.2.RELEASE</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
         <!-- spring-security-oauth2 -->
         <dependency>
@@ -52,18 +52,21 @@
             <artifactId>spring-security-oauth2</artifactId>
             <version>2.3.8.RELEASE</version>
         </dependency>
-        <!-- guava -->
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>27.0.1-jre</version>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-messaging</artifactId>
         </dependency>
-        <!--hutool-->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-            <version>5.3.5</version>
-        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>com.alibaba.cloud</groupId>-->
+            <!--<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>-->
+            <!--&lt;!&ndash;<version>2.1.2.RELEASE</version>&ndash;&gt;-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.cloud</groupId>-->
+            <!--<artifactId>spring-cloud-starter-openfeign</artifactId>-->
+        <!--</dependency>-->
+
         <!--lombok-->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -75,24 +78,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
+        <!--commons-pool2-->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
         </dependency>
-        <!--websocket-->
+        <!-- guava -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-messaging</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.github.xingshuangs</groupId>
-            <artifactId>spring-service-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>27.0.1-jre</version>
         </dependency>
     </dependencies>
 
