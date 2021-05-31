@@ -28,6 +28,7 @@
         <module>spring-service-user-demo</module>
         <module>spring-service-monitor-demo</module>
         <module>spring-service-common</module>
+        <module>ros-demo</module>
     </modules>
 
 </project>
