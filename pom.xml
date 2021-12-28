@@ -29,6 +29,7 @@
         <module>spring-service-monitor-demo</module>
         <module>spring-service-common</module>
         <module>ros-demo</module>
+        <module>spring-mqtt-demo</module>
     </modules>
 
 </project>

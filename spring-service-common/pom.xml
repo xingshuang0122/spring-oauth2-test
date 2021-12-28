@@ -12,6 +12,7 @@
     <groupId>com.github.xingshuangs</groupId>
     <artifactId>spring-service-common</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>spring-service-common</name>
 
     <dependencies>
