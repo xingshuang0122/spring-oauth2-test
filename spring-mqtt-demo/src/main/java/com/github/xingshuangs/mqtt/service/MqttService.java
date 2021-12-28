@@ -98,14 +98,11 @@ public class MqttService {
         MqttServiceCallback callback = new MqttServiceCallback(this.mqttClient, request, this.objectMapper);
         this.mqttClient.subscribe(request.getResponseTopic(), callback);
         if (sync) {
-            while (!callback.getCompleted()) {
-                try {
-                    synchronized (callback.getLock()) {
-                        callback.getLock().wait(timeout);
-                    }
-                } catch (InterruptedException e) {
-                    break;
+            try {
+                synchronized (callback.getLock()) {
+                    callback.getLock().wait(timeout);
                 }
+            } catch (InterruptedException e) {
             }
         }
         return callback;
