@@ -8,6 +8,8 @@ import com.github.xingshuangs.mybatis.plus.demo.entity.User;
 import com.google.common.base.Preconditions;
 import com.github.xingshuangs.mybatis.plus.demo.service.IUserRoleService;
 import com.github.xingshuangs.mybatis.plus.demo.service.IUserService;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Streams;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -45,6 +47,20 @@ public class UserController {
 
         this.userService = userService;
         this.userRoleService = userRoleService;
+    }
+
+    @GetMapping("/test")
+    public ResponseResult info1() {
+
+        List<User> list = Lists.newArrayList();
+        for (int i = 0; i < 5; i++) {
+            User user = new User();
+            user.setUsername("testzzzz" + System.nanoTime() + i);
+            user.setPassword("1111");
+            list.add(user);
+        }
+        this.userService.saveBatch(list);
+        return ResponseResult.succeed("");
     }
 
     /**

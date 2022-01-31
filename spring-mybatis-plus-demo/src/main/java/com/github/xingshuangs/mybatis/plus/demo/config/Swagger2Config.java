@@ -33,7 +33,7 @@ public class Swagger2Config {
                 .apiInfo(apiInfo())
                 .select()
                 //  为当前包路径
-                .apis(RequestHandlerSelectors.basePackage("com.huibo.mybatis.plus.demo"))
+                .apis(RequestHandlerSelectors.basePackage("com.github.xingshuangs.mybatis.plus.demo"))
                 .paths(PathSelectors.any())
                 .build();
     }
