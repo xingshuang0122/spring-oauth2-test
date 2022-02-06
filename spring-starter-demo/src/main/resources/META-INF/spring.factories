@@ -1,4 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.github.xingshuangs.starter.demo.controller.HelloWorld,\
   com.github.xingshuangs.starter.demo.service.Box,\
-  com.github.xingshuangs.starter.demo.config.BaseConfig
+  com.github.xingshuangs.starter.demo.config.BaseConfig,\
+  com.github.xingshuangs.starter.demo.config.AtmpConfig

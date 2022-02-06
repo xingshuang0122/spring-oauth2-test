@@ -18,4 +18,6 @@ public class DeviceProperties {
     private String nc= "aad";
 
     private Boolean open = false;
+
+    private String storageAddress = "test";
 }

@@ -31,6 +31,7 @@
         <module>ros-demo</module>
         <module>spring-mqtt-demo</module>
         <module>spring-starter-demo</module>
+        <module>spring-configuration-demo</module>
     </modules>
 
 </project>

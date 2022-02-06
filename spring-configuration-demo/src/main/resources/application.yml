@@ -5,3 +5,4 @@ custom:
 device:
   name: eng
   nc: chinese
+  storage-address: 123456

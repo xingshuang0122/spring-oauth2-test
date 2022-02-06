@@ -5,6 +5,7 @@ import com.github.xingshuangs.spring.configuration.CustomProperties;
 import com.github.xingshuangs.starter.demo.controller.HelloWorld;
 import com.github.xingshuangs.starter.demo.properties.DeviceProperties;
 import com.github.xingshuangs.starter.demo.service.Box;
+import com.github.xingshuangs.starter.demo.service.Worker;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,12 +33,21 @@ public class DemoTest {
     @Autowired
     private DeviceProperties deviceProperties;
 
+    @Autowired
+    private Worker worker;
+
     @GetMapping("/demo")
     public ResponseEntity triggerMqttSync() {
         log.info("控制层={}", customProperties);
         log.info("hello={}", helloWorld);
         log.info("box={}", box);
         log.info("device={}", deviceProperties);
-        return ResponseEntity.ok(customProperties);
+        return ResponseEntity.ok(deviceProperties);
+    }
+
+    @GetMapping("/demo1")
+    public ResponseEntity triggerMqttSync1() {
+        log.info("worker={}", worker);
+        return ResponseEntity.ok(worker);
     }
 }
