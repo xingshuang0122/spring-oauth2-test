@@ -1,6 +1,7 @@
 HELP.md
 target/
 logs/
+h2db/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
