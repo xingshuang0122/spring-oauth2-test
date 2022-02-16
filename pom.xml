@@ -32,6 +32,7 @@
         <module>spring-mqtt-demo</module>
         <module>spring-starter-demo</module>
         <module>spring-configuration-demo</module>
+        <module>spring-h2-demo</module>
     </modules>
 
 </project>
