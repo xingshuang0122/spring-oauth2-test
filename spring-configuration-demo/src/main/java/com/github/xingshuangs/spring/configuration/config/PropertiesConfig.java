@@ -1,6 +1,7 @@
-package com.github.xingshuangs.spring.configuration;
+package com.github.xingshuangs.spring.configuration.config;
 
 
+import com.github.xingshuangs.spring.configuration.CustomProperties;
 import com.github.xingshuangs.starter.demo.properties.DeviceProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
