@@ -33,6 +33,7 @@
         <module>spring-starter-demo</module>
         <module>spring-configuration-demo</module>
         <module>spring-h2-demo</module>
+        <module>s7-demo</module>
     </modules>
 
 </project>
