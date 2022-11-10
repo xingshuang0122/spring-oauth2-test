@@ -14,8 +14,8 @@ import java.util.Random;
  * @author xingshuang
  */
 @RestController
-@RequestMapping("/test")
-public class Test {
+@RequestMapping("/normal")
+public class S7NormalComController {
     Random random = new Random();
 
     @Autowired
@@ -23,7 +23,6 @@ public class Test {
 
     @GetMapping("/uint16")
     public ResponseEntity<Integer> uint16() {
-//        log.info("uint16");
         this.s7PLC.writeUInt16("DB1.0", random.nextInt(255));
         int res = this.s7PLC.readUInt16("DB1.0");
         return ResponseEntity.ok(res);
@@ -31,7 +30,6 @@ public class Test {
 
     @GetMapping("/boolean")
     public ResponseEntity booleanTest() {
-//        log.info("boolean");
         this.s7PLC.writeBoolean("DB1.0.0", random.nextInt(255) % 2 == 0);
         boolean res = this.s7PLC.readBoolean("DB1.0.0");
         return ResponseEntity.ok(res);
@@ -39,7 +37,6 @@ public class Test {
 
     @GetMapping("/float32")
     public ResponseEntity float32Test() {
-//        log.info("float32");
         this.s7PLC.writeFloat32("DB1.0", random.nextFloat());
         float res = this.s7PLC.readFloat32("DB1.0");
         return ResponseEntity.ok(res);
@@ -47,7 +44,6 @@ public class Test {
 
     @GetMapping("/string")
     public ResponseEntity stringTest() {
-//        log.info("string");
         this.s7PLC.writeString("DB1.0", String.valueOf(random.nextInt(20)));
         String res = this.s7PLC.readString("DB1.0");
         return ResponseEntity.ok(res);
